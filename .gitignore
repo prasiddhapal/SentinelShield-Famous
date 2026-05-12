@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+sentinel.db
+*.sqlite3
+
+# Logs and Exports
+logs/
+*.log
+sentinelshield_logs.csv
+server.log
+
+# Virtual Environments
+venv/
+env/
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db

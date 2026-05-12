@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Request Blocked — SentinelShield</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="blocked-page">
+    <div class="blocked-card">
+      <div class="blocked-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+        </svg>
+      </div>
+      <h1 class="blocked-title">Request Blocked</h1>
+      <p class="blocked-sub">SentinelShield has intercepted a potentially malicious request.</p>
+      <div class="blocked-detail">
+        <div class="blocked-row">
+          <span class="blocked-key">Threat Type</span>
+          <span class="blocked-val blocked-threat">{{ attack_type }}</span>
+        </div>
+        <div class="blocked-row">
+          <span class="blocked-key">Source IP</span>
+          <span class="blocked-val">{{ ip }}</span>
+        </div>
+        <div class="blocked-row">
+          <span class="blocked-key">HTTP Status</span>
+          <span class="blocked-val">403 Forbidden</span>
+        </div>
+        <div class="blocked-row">
+          <span class="blocked-key">Action</span>
+          <span class="blocked-val badge-blocked-inline">BLOCKED</span>
+        </div>
+      </div>
+      <a href="/" class="btn-dash">← Back to Dashboard</a>
+    </div>
+  </div>
+  <script>
+    // Animate the shield icon
+    document.querySelector('.blocked-icon svg').animate([
+      {transform: 'scale(1)', opacity: 1},
+      {transform: 'scale(1.08)', opacity: 0.8},
+      {transform: 'scale(1)', opacity: 1},
+    ], {duration: 2000, iterations: Infinity, easing: 'ease-in-out'});
+  </script>
+</body>
+</html>

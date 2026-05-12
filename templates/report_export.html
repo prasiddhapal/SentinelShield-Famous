@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SentinelShield Security Report</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: #f9fbfd;
+    }
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h1 {
+      color: #1a1a1a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    h2 {
+      color: #2b6cb0;
+      margin-top: 30px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 5px;
+    }
+    .meta {
+      color: #718096;
+      font-size: 0.9em;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th {
+      background-color: #f7fafc;
+      font-weight: 600;
+      color: #4a5568;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .summary-box {
+      background: #f7fafc;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid #4299e1;
+    }
+    .summary-box.alert {
+      border-left-color: #e53e3e;
+    }
+    .recommendations li {
+      margin-bottom: 10px;
+      color: #2d3748;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SentinelShield Security Report</h1>
+    <div class="meta">Generated: {{ data.generated_at }}</div>
+
+    <h2>1. Attack Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-box">
+        <strong>Total Requests Processed</strong><br>
+        <span style="font-size: 1.5em;">{{ data.summary.total_requests or 0 }}</span>
+      </div>
+      <div class="summary-box alert">
+        <strong>Total Threats Blocked</strong><br>
+        <span style="font-size: 1.5em; color: #e53e3e;">{{ data.summary.total_blocked or 0 }}</span>
+      </div>
+      <div class="summary-box">
+        <strong>Normal Traffic Allowed</strong><br>
+        <span style="font-size: 1.5em;">{{ data.summary.total_allowed or 0 }}</span>
+      </div>
+      <div class="summary-box">
+        <strong>Unique IPs Tracked</strong><br>
+        <span style="font-size: 1.5em;">{{ data.summary.unique_ips or 0 }}</span>
+      </div>
+    </div>
+
+    <h2>2. Attack Type Distribution</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Attack Signature</th>
+          <th>Severity</th>
+          <th>Events Count</th>
+          <th>Unique Source IPs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in data.attack_breakdown %}
+        <tr>
+          <td>{{ a.attack_type }}</td>
+          <td>{{ a.severity }}</td>
+          <td>{{ a.count }}</td>
+          <td>{{ a.unique_ips }}</td>
+        </tr>
+        {% endfor %}
+        {% if not data.attack_breakdown %}
+        <tr><td colspan="4">No attacks recorded yet.</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    <h2>3. Top Suspicious Threat Actors</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>IP Address</th>
+          <th>Blocked Count</th>
+          <th>Flagged Count</th>
+          <th>Total Reqs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in data.repeat_offenders %}
+        <tr>
+          <td style="font-family: monospace;">{{ i.ip }}</td>
+          <td style="color: #e53e3e; font-weight: bold;">{{ i.blocked_count }}</td>
+          <td>{{ i.flagged_count }}</td>
+          <td>{{ i.total_requests }}</td>
+        </tr>
+        {% endfor %}
+        {% if not data.repeat_offenders %}
+        <tr><td colspan="4">No threats observed.</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    <h2>4. Actionable Security Recommendations</h2>
+    <ul class="recommendations">
+      {% for r in recs %}
+      <li>{{ r }}</li>
+      {% endfor %}
+    </ul>
+
+    <div style="margin-top: 50px; text-align: center; color: #a0aec0; font-size: 0.85em;">
+      SentinelShield WAF/IDS &copy; Automated Security Documentation
+    </div>
+  </div>
+</body>
+</html>

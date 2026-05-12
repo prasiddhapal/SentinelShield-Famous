@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Denied — Permanent Ban</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .banned-card {
+      border: 3px solid #ff0000 !important;
+      box-shadow: 0 0 80px rgba(255, 0, 0, 0.4), var(--shadow-panel) !important;
+      animation: shake 0.6s ease-in-out;
+    }
+    @keyframes shake {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      10% { transform: translate(-1px, -2px) rotate(-1deg); }
+      20% { transform: translate(-3px, 0px) rotate(1deg); }
+      30% { transform: translate(3px, 2px) rotate(0deg); }
+      40% { transform: translate(1px, -1px) rotate(1deg); }
+      50% { transform: translate(-1px, 2px) rotate(-1deg); }
+      60% { transform: translate(-3px, 1px) rotate(0deg); }
+      70% { transform: translate(3px, 1px) rotate(-1deg); }
+      80% { transform: translate(-1px, -1px) rotate(1deg); }
+      90% { transform: translate(1px, 2px) rotate(0deg); }
+      100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+    .banned-title { color: #ff0000 !important; font-size: 2.2rem !important; }
+    .banned-sub { color: #ff9999 !important; font-weight: 600 !important; }
+    .banned-icon { background: rgba(255, 0, 0, 0.2) !important; color: #ff0000 !important; border-color: #ff0000 !important; }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="blocked-page">
+    <div class="blocked-card banned-card">
+      <div class="blocked-icon banned-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/>
+          <path d="M8 12H16" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 class="blocked-title banned-title">PERMANENT BAN</h1>
+      <p class="blocked-sub banned-sub">Your IP has been flagged for persistent malicious activity.</p>
+      <div class="blocked-detail">
+        <div class="blocked-row">
+          <span class="blocked-key">Reason</span>
+          <span class="blocked-val" style="color:#ff0000">Exceeded Security Risk Threshold</span>
+        </div>
+        <div class="blocked-row">
+          <span class="blocked-key">Source IP</span>
+          <span class="blocked-val">{{ ip }}</span>
+        </div>
+        <div class="blocked-row">
+          <span class="blocked-key">Ban Status</span>
+          <span class="blocked-val badge-blocked-inline" style="background:#ff0000; color:#fff; border-color:#ff0000">PERMANENT</span>
+        </div>
+        <div class="blocked-row">
+          <span class="blocked-key">Timestamp</span>
+          <span class="blocked-val">{{ timestamp }}</span>
+        </div>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2rem;">SentinelShield Autonomous Protection System</p>
+    </div>
+  </div>
+</body>
+</html>
